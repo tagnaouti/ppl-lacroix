@@ -1,0 +1,109 @@
+---
+import CategoryBadge from './CategoryBadge.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  author: string;
+  date: Date;
+  category: string;
+  slug: string;
+}
+
+const { title, description, author, date, category, slug } = Astro.props;
+
+const categoryEmoji: Record<string, string> = {
+  voyages: '✈️',
+  recettes: '🍰',
+  sports: '⚽',
+  education: '📚',
+  interviews: '🎤',
+};
+
+const emoji = categoryEmoji[category] ?? '📝';
+
+const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(date);
+---
+
+<a href={`/articles/${slug}`} class:list={['card', `cat-${category}`]}>
+  <div class="card-image">
+    <span class="card-emoji">{emoji}</span>
+  </div>
+  <div class="card-body">
+    <CategoryBadge category={category} />
+    <h3 class="card-title">{title}</h3>
+    <p class="card-desc">{description}</p>
+    <div class="card-meta">
+      <span class="card-author">🪶 {author}</span>
+      <span class="card-date">{formattedDate}</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-image {
+    height: 140px;
+    background: var(--cat-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-emoji {
+    font-size: 3rem;
+  }
+
+  .card-body {
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    flex: 1;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+    padding-top: var(--space-sm);
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .card-author {
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+interface Props {
+  category: string;
+}
+
+const { category } = Astro.props;
+
+const categoryMap: Record<string, { label: string; emoji: string }> = {
+  voyages: { label: 'Voyages', emoji: '✈️' },
+  recettes: { label: 'Recettes', emoji: '🍰' },
+  sports: { label: 'Sports', emoji: '⚽' },
+  education: { label: 'Éducation', emoji: '📚' },
+  interviews: { label: 'Interviews', emoji: '🎤' },
+};
+
+const info = categoryMap[category] ?? { label: category, emoji: '📝' };
+---
+
+<span class:list={['badge', `cat-${category}`]}>
+  <span class="badge-emoji">{info.emoji}</span>
+  {info.label}
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.15rem 0.65rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: var(--cat-bg);
+    color: var(--cat-color);
+  }
+
+  .badge-emoji {
+    font-size: 0.7rem;
+  }
+</style>

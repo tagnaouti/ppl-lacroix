@@ -1,0 +1,107 @@
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <h1>Bienvenue chez les <span class="highlight">P'tites Plumes</span> !</h1>
+      <p class="hero-desc">
+        Nous sommes un groupe de filles de Lacroix-Falgarde et on adore
+        écrire, découvrir et partager. Ici tu trouveras nos articles sur
+        les voyages, les recettes, le sport et plein d'interviews !
+      </p>
+      <p class="hero-tagline">Penser &middot; Partager &middot; Lire</p>
+    </div>
+    <div class="hero-visual">
+      <span class="hero-feather">🪶</span>
+      <div class="hero-sparkles">
+        <span>✨</span>
+        <span>⭐</span>
+        <span>✨</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--cat-voyages-light) 0%, var(--cat-interviews-light) 50%, var(--cat-sports-light) 100%);
+    padding: var(--space-3xl) 0;
+  }
+
+  .hero-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xl);
+  }
+
+  .hero-text {
+    flex: 1;
+  }
+
+  .hero-text h1 {
+    font-size: 2.4rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .highlight {
+    color: var(--color-mint);
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-md);
+    max-width: 540px;
+  }
+
+  .hero-tagline {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-peach);
+    font-size: 1.1rem;
+  }
+
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .hero-feather {
+    font-size: 5rem;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .hero-sparkles {
+    display: flex;
+    gap: var(--space-md);
+    font-size: 1.5rem;
+  }
+
+  .hero-sparkles span:nth-child(2) {
+    animation: twinkle 2s ease-in-out infinite 0.5s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+  }
+
+  @media (max-width: 768px) {
+    .hero-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+    .hero-text h1 {
+      font-size: 1.8rem;
+    }
+    .hero-desc {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+</style>

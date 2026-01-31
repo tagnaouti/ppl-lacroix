@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+export function getStaticPaths() {
+  const categories = [
+    { key: 'voyages', label: 'Voyages', emoji: '✈️', desc: 'Nos aventures et découvertes aux quatre coins du monde !' },
+    { key: 'recettes', label: 'Recettes', emoji: '🍰', desc: 'Des recettes faciles et délicieuses à faire à la maison.' },
+    { key: 'sports', label: 'Sports', emoji: '⚽', desc: 'Le sport, c\'est trop bien ! Découvrez nos articles.' },
+    { key: 'education', label: 'Éducation', emoji: '📚', desc: 'Apprendre en s\'amusant, c\'est notre devise !' },
+    { key: 'interviews', label: 'Interviews', emoji: '🎤', desc: 'Rencontres avec des personnes inspirantes de notre village.' },
+  ];
+  return categories.map(({ key, ...rest }) => ({ params: { category: key }, props: rest }));
+}
+
+const { category } = Astro.params;
+const meta = Astro.props;
+
+const articles = await getCollection('articles', ({ data }) => data.category === category && !data.draft);
+const sorted = articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout title={meta.label}>
+  <section class="category-header">
+    <div class="container">
+      <span class="category-emoji">{meta.emoji}</span>
+      <h1>{meta.label}</h1>
+      <p>{meta.desc}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {sorted.length > 0 ? (
+        <div class="grid grid-3">
+          {sorted.map((article) => (
+            <ArticleCard
+              title={article.data.title}
+              description={article.data.description}
+              author={article.data.author}
+              date={article.data.date}
+              category={article.data.category}
+              slug={article.id}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="empty">Pas encore d'articles dans cette catégorie. Reviens bientôt ! 🪶</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .category-header {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    background: linear-gradient(135deg, var(--cat-voyages-light), var(--cat-interviews-light));
+  }
+
+  .category-emoji {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-sm);
+  }
+
+  .category-header h1 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .category-header p {
+    color: var(--color-text-light);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .empty {
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+    padding: var(--space-3xl);
+  }
+</style>

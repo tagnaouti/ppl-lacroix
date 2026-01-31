@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryBadge from '../../components/CategoryBadge.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(article.data.date);
+---
+
+<BaseLayout title={article.data.title} description={article.data.description}>
+  <article class="article-page">
+    <div class="container">
+      <a href={`/${article.data.category}`} class="back-link">← Retour aux {article.data.category}</a>
+
+      <header class="article-header">
+        <CategoryBadge category={article.data.category} />
+        <h1>{article.data.title}</h1>
+        <div class="article-meta">
+          <span class="meta-author">🪶 {article.data.author}</span>
+          <span class="meta-date">📅 {formattedDate}</span>
+        </div>
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      {article.data.tags.length > 0 && (
+        <div class="article-tags">
+          {article.data.tags.map(tag => (
+            <span class="tag">#{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-page {
+    padding: var(--space-xl) 0;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-lg);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .article-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 2px solid var(--cat-voyages-light);
+  }
+
+  .article-header h1 {
+    margin-top: var(--space-md);
+    font-size: 2rem;
+  }
+
+  .article-meta {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+  }
+
+  .meta-author {
+    font-weight: 600;
+  }
+
+  .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid #f0f0f0;
+    justify-content: center;
+  }
+
+  .tag {
+    background: var(--cat-voyages-light);
+    color: var(--color-mint);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+</style>

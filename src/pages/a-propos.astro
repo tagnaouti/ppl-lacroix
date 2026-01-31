@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="À propos">
+  <section class="about-header">
+    <div class="container">
+      <span class="about-emoji">🪶</span>
+      <h1>À propos des P'tites Plumes</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="prose">
+        <h2>Qui sommes-nous ?</h2>
+        <p>
+          Nous sommes un groupe de filles de <strong>Lacroix-Falgarde</strong>, un joli petit village
+          près de Toulouse. On a entre 9 et 11 ans et on adore écrire, lire et découvrir
+          plein de choses !
+        </p>
+        <p>
+          Un jour, on s'est dit : « Et si on créait notre propre journal ? » Et voilà,
+          <strong>Les P'tites Plumes de Lacroix</strong> est né ! 🎉
+        </p>
+
+        <h2>Notre mission</h2>
+        <p>
+          Notre journal parle de tout ce qui nous passionne :
+        </p>
+        <ul>
+          <li>✈️ <strong>Voyages</strong> – Nos aventures et découvertes</li>
+          <li>🍰 <strong>Recettes</strong> – Des recettes faciles et gourmandes</li>
+          <li>⚽ <strong>Sports</strong> – Nos sports préférés</li>
+          <li>📚 <strong>Éducation</strong> – Des astuces pour l'école</li>
+          <li>🎤 <strong>Interviews</strong> – Des rencontres avec des gens inspirants</li>
+        </ul>
+
+        <h2>PPL, ça veut dire quoi ?</h2>
+        <p>
+          <strong>P</strong>enser, <strong>P</strong>artager, <strong>L</strong>ire ! C'est notre devise.
+          On pense à des sujets intéressants, on partage nos idées et on lit
+          les articles des copines. C'est ça, l'esprit des P'tites Plumes !
+        </p>
+
+        <h2>Nous contacter</h2>
+        <p>
+          Tu veux nous écrire ou proposer un article ? Parle à ta maîtresse ou
+          à tes parents, ils sauront comment nous joindre. On a hâte de te lire ! 💌
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-header {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    background: linear-gradient(135deg, var(--cat-interviews-light), var(--cat-voyages-light));
+  }
+
+  .about-emoji {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-sm);
+  }
+</style>

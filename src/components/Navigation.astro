@@ -1,0 +1,167 @@
+---
+const currentPath = Astro.url.pathname;
+
+const categories = [
+  { name: 'Accueil', href: '/', emoji: '' },
+  { name: 'Voyages', href: '/voyages', emoji: '✈️' },
+  { name: 'Recettes', href: '/recettes', emoji: '🍰' },
+  { name: 'Sports', href: '/sports', emoji: '⚽' },
+  { name: 'Éducation', href: '/education', emoji: '📚' },
+  { name: 'Interviews', href: '/interviews', emoji: '🎤' },
+  { name: 'À propos', href: '/a-propos', emoji: '💜' },
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <img src="/ppl-logo.png" alt="PPL – Les P'tites Plumes de Lacroix" class="logo-img" />
+    </a>
+
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <nav class="main-nav">
+      <ul>
+        {categories.map(({ name, href, emoji }) => (
+          <li>
+            <a href={href} class:list={[{ active: currentPath === href || (href !== '/' && currentPath.startsWith(href)) }]}>
+              {emoji && <span class="nav-emoji">{emoji}</span>}
+              {name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+    z-index: 101;
+  }
+
+  .logo-img {
+    height: 150px;
+    width: auto;
+    margin-top: 80px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1));
+  }
+
+  .main-nav ul {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+  }
+
+  .main-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text);
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .main-nav a:hover,
+  .main-nav a.active {
+    background: var(--cat-voyages-light);
+    color: var(--color-mint);
+  }
+
+  .nav-emoji {
+    font-size: 0.85rem;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-toggle-label {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: var(--space-sm);
+  }
+
+  .nav-toggle-label span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .nav-toggle-label {
+      display: flex;
+    }
+
+    .main-nav {
+      position: absolute;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-md);
+      display: none;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+
+    .main-nav ul {
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .main-nav a {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    .nav-toggle:checked ~ .main-nav {
+      display: block;
+    }
+
+    .nav-toggle:checked ~ .nav-toggle-label span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .nav-toggle:checked ~ .nav-toggle-label span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle:checked ~ .nav-toggle-label span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+  }
+</style>

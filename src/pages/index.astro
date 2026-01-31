@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const sorted = allArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const categories = [
+  { key: 'voyages', label: 'Voyages', emoji: '✈️' },
+  { key: 'recettes', label: 'Recettes', emoji: '🍰' },
+  { key: 'sports', label: 'Sports', emoji: '⚽' },
+  { key: 'education', label: 'Éducation', emoji: '📚' },
+  { key: 'interviews', label: 'Interviews', emoji: '🎤' },
+];
+---
+
+<BaseLayout title="Accueil">
+  <Hero />
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">📰 Derniers articles</h2>
+      <div class="grid grid-3">
+        {sorted.slice(0, 6).map((article) => (
+          <ArticleCard
+            title={article.data.title}
+            description={article.data.description}
+            author={article.data.author}
+            date={article.data.date}
+            category={article.data.category}
+            slug={article.id}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {categories.map(({ key, label, emoji }) => {
+    const catArticles = sorted.filter(a => a.data.category === key).slice(0, 2);
+    return catArticles.length > 0 && (
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">
+            {emoji} {label}
+            <a href={`/${key}`} class="see-all">Voir tout →</a>
+          </h2>
+          <div class="grid grid-2">
+            {catArticles.map((article) => (
+              <ArticleCard
+                title={article.data.title}
+                description={article.data.description}
+                author={article.data.author}
+                date={article.data.date}
+                category={article.data.category}
+                slug={article.id}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+</BaseLayout>
+
+<style>
+  .see-all {
+    margin-left: auto;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-mint);
+  }
+</style>
