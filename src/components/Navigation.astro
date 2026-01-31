@@ -1,20 +1,21 @@
 ---
+const base = import.meta.env.BASE_URL;
 const currentPath = Astro.url.pathname;
 
 const categories = [
-  { name: 'Accueil', href: '/', emoji: '' },
-  { name: 'Voyages', href: '/voyages', emoji: '✈️' },
-  { name: 'Recettes', href: '/recettes', emoji: '🍰' },
-  { name: 'Sports', href: '/sports', emoji: '⚽' },
-  { name: 'Éducation', href: '/education', emoji: '📚' },
-  { name: 'Interviews', href: '/interviews', emoji: '🎤' },
-  { name: 'À propos', href: '/a-propos', emoji: '💜' },
+  { name: 'Accueil', href: `${base}/`, emoji: '' },
+  { name: 'Voyages', href: `${base}/voyages`, emoji: '✈️' },
+  { name: 'Recettes', href: `${base}/recettes`, emoji: '🍰' },
+  { name: 'Sports', href: `${base}/sports`, emoji: '⚽' },
+  { name: 'Éducation', href: `${base}/education`, emoji: '📚' },
+  { name: 'Interviews', href: `${base}/interviews`, emoji: '🎤' },
+  { name: 'À propos', href: `${base}/a-propos`, emoji: '💜' },
 ];
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="logo">
+    <a href={`${base}/`} class="logo">
       <img src={`${import.meta.env.BASE_URL}/ppl-logo.png`} alt="PPL – Les P'tites Plumes de Lacroix" class="logo-img" />
     </a>
 

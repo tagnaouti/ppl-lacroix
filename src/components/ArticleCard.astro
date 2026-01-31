@@ -21,6 +21,7 @@ const categoryEmoji: Record<string, string> = {
 };
 
 const emoji = categoryEmoji[category] ?? '📝';
+const base = import.meta.env.BASE_URL;
 
 const formattedDate = new Intl.DateTimeFormat('fr-FR', {
   day: 'numeric',
@@ -29,7 +30,7 @@ const formattedDate = new Intl.DateTimeFormat('fr-FR', {
 }).format(date);
 ---
 
-<a href={`/articles/${slug}`} class:list={['card', `cat-${category}`]}>
+<a href={`${base}/articles/${slug}`} class:list={['card', `cat-${category}`]}>
   <div class="card-image">
     <span class="card-emoji">{emoji}</span>
   </div>

@@ -44,7 +44,7 @@ const categories = [
         <div class="container">
           <h2 class="section-title">
             {emoji} {label}
-            <a href={`/${key}`} class="see-all">Voir tout →</a>
+            <a href={`${import.meta.env.BASE_URL}/${key}`} class="see-all">Voir tout →</a>
           </h2>
           <div class="grid grid-2">
             {catArticles.map((article) => (
